@@ -1,62 +1,57 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Card, Icon, Image } from 'semantic-ui-react';
+import MyForm from './components/MyForm';
 
 class App extends Component {
 
   constructor(props){
   super(props);
-  this.state = {nombre: '',apellido: '',sexo: '',club: '',url: '' };
-
-  //this.setHandler = this.setHandler.bind(this);
-  //this.submitHandler = this.submitHandler.bind(this);
+  
+  this.state = { clubes: [{"club": "river", "año": "1905","url" : "http://a.espncdn.com/i/teamlogos/soccer/500/16.png"},
+      {"club": "boca", "año": "1906", "url" : "http://a.espncdn.com/i/teamlogos/soccer/500/5.png"},
+      {"club": "racing", "año": "1908", "url" : "http://a.espncdn.com/i/teamlogos/soccer/500/15.png"} ,
+      {"club": "independiente" , "año": "1905" , "url" : "https://www.ogol.com.br/img/logos/equipas/2211_imgbank.png"}]};
 
   }
-
-  /*
-  setHandler = (event) => {
-    this.setState({[event.target.name]:event.target.value});
-  }
-  summitHandler = (event) => {    
-  }
-*/
-
-  setHandler = (event) => {
-    this.setState({[event.target.name]: event.target.value});  // name:value
-    //if(this.state.club==='boca') this.setState({url: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png' });
-    //if(this.state.club==='river') this.setState({url: 'http://a.espncdn.com/i/teamlogos/soccer/500/16.png'});
-  }
-  submitHandler = (event) => {
-    if(this.state.club==='boca') this.setState({url: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png' });
-    if(this.state.club==='river') this.setState({url: 'http://a.espncdn.com/i/teamlogos/soccer/500/16.png'});
-    event.preventDefault();
-  }
-
 
   render() {
     return (
       <div className="App">
-        <form onSubmit={this.submitHandler}>
-          <label>nombre:
-          <input type="text" name="nombre" value={this.state.nombre} onChange={this.setHandler} />
-          </label>
-          <label>apellido:
-          <input type="text" name="apellido" value={this.state.apellido} onChange={this.setHandler} />
-          </label>
-          <label>sexo:
-          <input type="text" name="sexo" value={this.state.sexo} onChange={this.setHandler} />
-          </label>
-          <label>club:
-          <input type="text" name="club" value={this.state.club} onChange={this.setHandler} />
-          </label>
-          <input type="submit" value={this.club}/>
-        </form>
-
-        <h1> {this.state.club}</h1>
-
-        <img src ={this.state.url} />
-
-
+       
+        <MyForm/>
+        {/*Recorre todo*/}
+        {this.state.clubes.map( (m) => 
+        <Card>
+        <Image src={m.url} />
+          <Card.Content>
+            <Card.Header>
+              {m.club}
+            </Card.Header>
+            <Card.Meta>
+             <span className='date'>
+              Fundo en {m.año}
+             </span>
+            </Card.Meta>          
+          </Card.Content>
+        </Card>
+        )}
+        {/*solo posicion 0*/}
+        <Card>
+          <Image src={this.state.clubes[0].url} />
+          <Card.Content>
+            <Card.Header>
+            {this.state.clubes[0].club}
+            </Card.Header>
+            <Card.Meta>
+              <span className='date'>
+                Fundo en {this.state.clubes[0].año}
+              </span>
+            </Card.Meta>
+          </Card.Content>
+       
+        </Card>
       </div>
     );
   }
